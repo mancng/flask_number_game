@@ -10,7 +10,7 @@ app.secret_key = 'KeepItSecretKeepItSafe'
 def index():
     # del session['random']
     if not 'random' in session:
-        session['random'] = random.randrange(0, 3)
+        session['random'] = random.randrange(1, 100)
         session['guess'] = False
         print "New random is:", session['random']
     else:
@@ -26,7 +26,6 @@ def process():
         flash("Too small", "red")
     elif int(guess) == int(session['random']):
         session['guess'] = True
-        print "You've got it!"
         flash("{} was the number!".format(session['random']), "green")
     return redirect('/')
 
