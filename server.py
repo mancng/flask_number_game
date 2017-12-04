@@ -8,8 +8,10 @@ app.secret_key = 'KeepItSecretKeepItSafe'
 
 @app.route('/')
 def index():
-    if session['random'] is None:
+    # del session['random']
+    if not 'random' in session:
         session['random'] = random.randrange(0, 3)
+        session['guess'] = False
         print "New random is:", session['random']
     else:
         print "Existing random is: ", session['random']
@@ -23,8 +25,15 @@ def process():
     elif int(guess) < int(session['random']):
         flash("Too small", "red")
     elif int(guess) == int(session['random']):
+        session['guess'] = True
         print "You've got it!"
         flash("{} was the number!".format(session['random']), "green")
     return redirect('/')
+
+@app.route('/reset', methods=['POST'])
+def reset():
+    del session['random']
+    return redirect('/')
+
 
 app.run(debug=True)

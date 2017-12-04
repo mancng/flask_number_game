@@ -20,10 +20,16 @@
                     {% endfor %}
                 {% endif %}
             {% endwith %}
-            <form action='/guessing' method='POST'>
-                <p><input type="text" name="get_num"></p>
-                <input id="button" type="submit">
-            </form>
+            {% if session['guess'] == False %}
+                <form action='/guessing' method='POST'>
+                    <p><input type="text" name="get_num"></p>
+                    <input id="button" type="submit">
+                </form>
+            {% else %}
+                <form action='/reset' method='POST'>
+                    <input id="button" type="submit" value="Play again!">
+                </form>
+            {% endif %}
         </div>
     </div>
 </body>
